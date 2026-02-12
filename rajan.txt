@@ -1,0 +1,40 @@
+Stack se reverse string 
+# jab kabhi hume loop har bar update karna hota hai har iteration me to hum while loop lagna chahiye kyuki ye yaha har iteration me condition chack karta hai true hai ya false
+↗ ↘ ↙ ↖ ⇆ ⇄ ⇇ ⇉ ↔ ↕
+deque ek doublylinked ke jaise haai magar isme hum har block me prev aur next
+ dete hai aur block me lagbhag 64 element aaa sakte hai uske jyada element ane
+  par python khud hi new block bana deta hai aur uska reference pahli block ke 
+  andar rahta hai aur isme hum popleft karte hai to yaha fast hota hai kyuki isme
+   element milta hai hume magar element block me rahta hai bus next time popleft karne
+    par next elemnet milta hai kyuki uski indexing shift ho jati hai jab left>right se
+     python us block ko remove kar deta hai block internally array ke jaise hota hai aur
+      jab hum appendleft kartee hai to index-1 ho jata hai kya mera concept sahi hai
+
+
+      list
+      ✔ Resize factor ≈ 1.125 rakhte hain
+      Python list values store nahi karta — references store karta hai.
+
+a = [10, "abc", [1,2], obj]
+      a[0] → pointer to integer object 10
+a[1] → pointer to string object "abc"
+a[2] → pointer to list object [1,2]
+
+def josephush(self,data,k):
+        if self.head is None:
+            self.head=Node(1)
+        temp=self.head
+        for i in range(2,data+1):
+            temp.next=Node(i)
+            temp=temp.next
+        temp.next=self.head
+        
+        prev=None
+        temp=self.head
+        while temp.next != temp:
+            for _ in range(1,k):
+                prev=temp
+                temp=temp.next
+            prev.next=temp.next
+            temp=temp.next
+        return temp.data
