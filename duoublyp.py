@@ -125,4 +125,3 @@ dll.print_forword()
 print(dll.midian()) 
 print(dll.flyod())
 print(dll.count())   
-       

@@ -133,24 +133,32 @@ class Circulardoublylinked:
             return
         temp=self.head
         prev=None
-        while temp.next != self.head and temp.data != data:
+        while temp.next !=self.head and temp.data != data:
             prev=temp
             temp=temp.next
-        if temp.data != data:
-            print("data is Not found")
+        if temp.data == data:
+            prev.next=temp.next
+            temp.next.prev=prev
+            temp=None
+            print(f"deleted {data}")
             return
-        prev.next=temp.next
-        temp.next.prev=prev
-        temp=None
-        print(f"data is deleted : {data}")
+        print("data is Not found")
         return
         
     def is_circular(self):
         if self.head is None:
             print("list is empty")
             return
-        temp=self.head.prev
-        return temp.next==self.head
+        slow=self.head
+        fast=self.head
+        while fast.next != self.head:
+            fast=fast.next.next
+            slow=slow.next
+            if slow==fast:
+                print("Circular")
+                return
+        print("Not Circular")
+        return
     
     def get_reference(self,data):
         if self.head is None:
@@ -237,7 +245,7 @@ print()
 print(cll.is_circular())
 n=cll.get_reference(3)
 cll.delete_reference(n)
-
+cll.is_circular()
                             
         
         
