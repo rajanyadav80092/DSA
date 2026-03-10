@@ -1,35 +1,17 @@
-class Queue:
-    def __init__(self):
-        self.queue=[]
-        self.queue2=[]
+def longest_vowel(nums,k):
+    vowel="aeiou"
+    leng=0
     
-    def push(self,data):
-        self.queue.append(data)
-        return data
-    def pop(self):
-        if not self.queue2:
-            while self.queue:
-                self.queue2.append(self.queue.pop())
-        if not self.queue2:
-            return "empty queue"
-        return self.queue2.pop()
-    def get(self):
-        if self.queue2:
-            return self.queue2
-        return self.queue
-    
-    def length(self):
-        if not self.queue:
-            return len(self.queue2)
-        return len(self.queue)
-q=Queue()
-q.push(1)
-q.push(2)
-q.push(3)
-q.pop()
-print(q.get())
-print(q.length())
-            
- 
-
-                
+    for i in range(k):
+        if nums[i] in vowel:
+            leng+=1
+    max_len=leng
+    for j in range(k,len(nums)):
+        if nums[j] in vowel:
+            leng+=1
+        if nums[j-k] in vowel:
+            leng-=1
+        max_len=max(max_len,leng)
+    return max_len
+a="abciiidef"
+print(longest_vowel(a,3))

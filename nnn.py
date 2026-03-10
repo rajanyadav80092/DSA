@@ -44,30 +44,20 @@
 # print(acc1.withdrawan(500))
 # BankAccount.show_all_bankaccount()
 
-# def min_len_subay(arr,s):
-#     min_len=float("inf")
-#     left=0
-#     curr=0
-    
-#     for right in range(len(arr)):
-#         curr+=arr[right]
-        
-#         while curr>=s:
-#             min_len=min(min_len,right-left+1)
-#             s-=arr[left]
-#             left+=1
-#     return 0 if min_len == float("inf") else min_len
-# arr = [2, 1, 5, 2, 3, 2]
-# print(min_len_subay(arr,7))
-def longest_list(nums):
+def min_len_subay(arr,s):
+    min_len=float("-inf")
     left=0
-    right=1
-    while left<len(nums)-1:
-        if nums[left]==nums[right]:
-            del nums[right]
-            right+=1
-        left+=1
-    return nums
-a=[2,3,3,3,6,9,9]
-print(longest_list(a))
+    curr=0
+    
+    for right in range(len(arr)):
+        curr+=arr[right]
+        
+        while curr>=s:
+            min_len=max(min_len,right-left+1)
+            curr-=arr[left]
+            left+=1
+    return 0 if min_len == float("inf") else min_len
+arr = [2, 1, 5, 2, 3, 2]
+print(min_len_subay(arr,7))
+
 
