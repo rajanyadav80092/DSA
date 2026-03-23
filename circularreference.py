@@ -243,6 +243,38 @@ class Circularlinkeddoubly:
             if curr == self.head:
                 break
         return "target not found"
+    
+    def swap_node(self):
+        if self.head is None:
+            return "list is empty"
+        dummy=Node(0)
+        dummy.next=self.head
+        last=self.head.prev
+        last.next=dummy
+        dummy.prev=last
+        
+        prev=dummy
+        
+        while prev.next != self.head and prev.next.next != self.head:
+            first=prev.next #1
+            second=first.next #2
+            
+            #swap #3
+            first.next=second.next # 1-3
+            second.next.prev=first #3-1
+            second.next=first #2-1
+            first.prev=second #1-2
+            prev.next=second #self.head=2
+            
+            prev=first
+        self.head=dummy.next
+        last=self.head.prev
+        last.next=self.head
+        return dummy.next
+            
+            
+            
+    
 
     
                 
@@ -252,11 +284,16 @@ class Circularlinkeddoubly:
 cll=Circularlinkeddoubly()
 cll.insert_at_bigining(1)
 cll.insert_at_bigining(2)
-# cll.insert_at_bigining(3)
-# cll.insert_at_between(3,4)
+cll.insert_at_bigining(3)
+cll.insert_at_between(3,4)
+cll.print_forword()
+print("target swap")
+# print(cll.swap_around_target(2))
 cll.print_forword()
 print()
-print(cll.swap_around_target(2))
+#swap
+cll.swap_node()
+print("swap")
 cll.print_forword()
                 
             

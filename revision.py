@@ -76,7 +76,55 @@ class Linkedlist:
             print(temp.data,end=" ")
             temp=temp.next
         print("None")
+    
+    def swap_node(self):
+        if self.head is None:
+            return "list is empty"
+        dummy=Node(0)
+        dummy.next=self.head
         
+        prev=dummy
+        while prev.next and prev.next.next:
+            first=prev.next
+            second=first.next
+            
+            #swap
+            first.next=second.next
+            second.next=first
+            prev.next=second
+            
+            prev=first
+        self.head=dummy.next
+        return dummy.next   
+    def swap_kth_node(self,k):
+        if self.head is None:
+            return "list is empty"
+        dummy=Node(0)
+        dummy.next=self.head
+        
+        prev=dummy
+        while True:
+            kth=prev
+            for _ in range(k):
+                kth=kth.next
+                if not kth:
+                    self.head=dummy.next
+                    return dummy.next
+            next_node=kth.next
+            prev_node=next_node
+            
+            curr=prev.next
+            while curr!= next_node:
+                temp=curr.next #2 #3 #4
+                curr.next=prev_node #1-4 #2-1 #3-2
+                prev_node=curr #1 #2 #3
+                curr=temp #2 #3 #4
+            temp=prev.next #1
+            prev.next=kth #3
+            prev=temp #1
+                
+                
+            
 ll=Linkedlist()
 ll.insert_at_beginning(10)
 ll.insert_at_end(12)
@@ -94,30 +142,11 @@ print(ll.count())
 print(ll.middle())
 ll.delete_node(103)
 ll.print_list()
-# class Queue:
-#     def __init__(self):
-#         self.queue1=[]
-#         self.queue2=[]
-#     def push(self,data):
-#         self.queue1.append(data)
-    
-#     def pop(self):
-#         if not self.queue2:
-            
-#             while self.queue1:
-#                 item=self.queue1.pop()
-#                 self.queue2.append(item)
-#             if not self.queue2:
-#                 return "queue is empty"
-#             return self.queue2.pop()
-#     def show(self):
-#         return self.queue1
-# q=Queue()
-# q.push(20)
-# q.push(21)
-# q.push(22)
-# q.push(23)
-# q.push(24)
-# print(q.pop())
-# print(q.show())
+ll.swap_node()
+print("swap")
+ll.print_list()
+print("swap_target")
+ll.swap_kth_node(3)
+ll.print_list()
+
                  
