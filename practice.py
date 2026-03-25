@@ -58,15 +58,66 @@ class Linkedlist:
             slow=slow.next
             fast=fast.next.next
         return slow.data
+    
+    #sort all list
+    # def sort(self):
+    #     if self.head is None:
+    #         return "list is empty"
+    #     temp=self.head
+    #     a=[]
+    #     while temp:
+    #         a.append(temp.data)
+    #         temp=temp.next
+    #     for i in range(1,len(a)):
+    #         key=a[i]
+    #         j=i-1
+    #         while j>=0 and key<=a[j]:
+    #             a[j+1]=a[j]
+    #             j-=1
+    #         a[j+1]=key
+    #     return a
+    
+    def sortList(self,head):
+        if self.head is None or self.head.next is None:
+            return head
+        slow=self.head
+        fast=self.head.next
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+        mid=slow.next #4
+        slow.next=None #3-None
+        left=self.sortList(head)
+        right=self.sortList(mid)
+        
+        return self.merge(left,right)
+    def merge(self,l1,l2):
+        dummy=Node(0)
+        temp=dummy
+        
+        while l1 and l2:
+            if l1.data<l2.data:
+                temp.next=l1
+                l1=l1.next
+            else:
+                temp.next=l2
+                l2=l2.next
+            temp=temp.next
+        if l1:
+            temp.next=l1
+        if l2:
+            temp.next=l2
+        return dummy.next        
+            
+                
 ll=Linkedlist()
-ll.insert_at_begining(5)
-ll.insert_at_begining(4)
-ll.insert_at_begining(3)
-ll.insert_at_begining(2)
 ll.insert_at_begining(1)
-ll.print_forward()
-print(ll.medium())
-ll.backward_node()
-ll.print_forward()
+ll.insert_at_begining(3)
+ll.insert_at_begining(4)
+ll.insert_at_begining(5)
+ll.insert_at_begining(2)
+vv=ll.print_forward()
+print(ll.sortList())
+
         
         
