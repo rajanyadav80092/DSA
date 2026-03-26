@@ -107,17 +107,37 @@ class Linkedlist:
             temp.next=l1
         if l2:
             temp.next=l2
-        return dummy.next        
+        return dummy.next  
+    
+    def reversekth(self,left,right):
+        if self.head is None:
+            return "list is empty"
+        dummy=Node(0)
+        dummy.next=self.head
+        temp=dummy
+        for _ in range(left-1):
+            temp=temp.next #1
+        curr=temp.next #2
+        for _ in range(right-left):
+            nxt=curr.next #3
+            curr.next=nxt.next #2-4
+            nxt.next=temp.next #3-2
+            temp.next=nxt # 1-3
+        dummy.next=self.head
+        return dummy.next
+               
             
                 
 ll=Linkedlist()
-ll.insert_at_begining(1)
-ll.insert_at_begining(3)
-ll.insert_at_begining(4)
 ll.insert_at_begining(5)
+ll.insert_at_begining(4)
+ll.insert_at_begining(3)
 ll.insert_at_begining(2)
-vv=ll.print_forward()
-print(ll.sortList())
+ll.insert_at_begining(1)
+ll.print_forward()
+ll.reversekth(2,4)
+ll.print_forward()
+# print(ll.sortList())
 
         
         
