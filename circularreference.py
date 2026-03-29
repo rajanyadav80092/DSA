@@ -7,6 +7,10 @@ class Node:
 class Circularlinkeddoubly:
     def __init__(self):
         self.head=None
+
+class Circulardoubly:
+    def __init__(self):
+        self.head=None
         
     def insert_at_bigining(self,data):
         new_node=Node(data)
@@ -273,7 +277,34 @@ class Circularlinkeddoubly:
         return dummy.next
             
             
-            
+    def break_circular_list(self):
+        if self.head is None:
+            return "list is empty"
+        slow=self.head
+        fast=self.head
+        while fast.next != self.head and fast.next.next !=self.head:
+            slow=slow.next
+            fast=fast.next.next
+        head1=self.head
+        prev=slow.next
+        slow.next=head1
+        if fast.next==self.head:
+            fast.next=prev
+        else:
+            fast.next=prev
+        curr=self.head
+        temp=prev
+        
+        while curr.next != self.head:
+            print(curr.data,end=" ")
+            curr=curr.next
+        print(curr.data,end=" ")
+        
+        while temp.next!=prev:
+            print(temp.data,end=" ")
+            temp=temp.next
+        print(temp.data,end=" ")
+        
     
 
     
@@ -282,19 +313,26 @@ class Circularlinkeddoubly:
             
             
 cll=Circularlinkeddoubly()
-cll.insert_at_bigining(1)
-cll.insert_at_bigining(2)
 cll.insert_at_bigining(3)
-cll.insert_at_between(3,4)
-cll.print_forword()
-print("target swap")
-# print(cll.swap_around_target(2))
+cll.insert_at_bigining(2)
+cll.insert_at_bigining(1)
+cll.insert_at_end(6)
 cll.print_forword()
 print()
-#swap
-cll.swap_node()
-print("swap")
+cll.break_circular_list()
 cll.print_forword()
+cld=Circulardoubly()
+cld.insert_at_between(3)
+cld.insert_at_end(5)
+cld.print_forword()
+# print("target swap")
+# print(cll.swap_around_target(2))
+# cll.print_forword()
+# print()
+# #swap
+# cll.swap_node()
+# print("swap")
+# cll.print_forword()
                 
             
     
