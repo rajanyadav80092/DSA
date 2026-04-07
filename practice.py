@@ -59,36 +59,22 @@ class Linkedlist:
             fast=fast.next.next
         return slow.data
     
-    #sort all list
-    # def sort(self):
-    #     if self.head is None:
-    #         return "list is empty"
-    #     temp=self.head
-    #     a=[]
-    #     while temp:
-    #         a.append(temp.data)
-    #         temp=temp.next
-    #     for i in range(1,len(a)):
-    #         key=a[i]
-    #         j=i-1
-    #         while j>=0 and key<=a[j]:
-    #             a[j+1]=a[j]
-    #             j-=1
-    #         a[j+1]=key
-    #     return a
-    
-    def sortList(self,head):
-        if self.head is None or self.head.next is None:
+    def sortList(self):
+            self.head = self._merge_sort(self.head)
+
+    def _merge_sort(self, head):
+        if not head or not head.next:
             return head
-        slow=self.head
-        fast=self.head.next
+
+        slow=head
+        fast=head.next
         while fast and fast.next:
             slow=slow.next
             fast=fast.next.next
         mid=slow.next #4
         slow.next=None #3-None
-        left=self.sortList(head)
-        right=self.sortList(mid)
+        left=self._merge_sort(head)
+        right=self._merge_sort(mid)
         
         return self.merge(left,right)
     def merge(self,l1,l2):
@@ -108,6 +94,32 @@ class Linkedlist:
         if l2:
             temp.next=l2
         return dummy.next  
+    
+    def insertion_sort(self):
+        arr=[]
+        temp=self.head
+        while temp:
+            arr.append(temp.data)
+            temp=temp.next
+        n=len(arr)
+        for i in range(1,n):
+            key=arr[i]
+            j=i-1
+            while j>=0 and key<arr[j]:
+                arr[j+1]=arr[j]
+                j-=1
+            arr[j+1]=key
+        if not arr:
+            return None
+        dummy = Node(0)
+        dummy.next=self.head
+        current = dummy
+        for i in range(len(arr)):
+            current.next = Node(arr[i])
+            current = current.next
+        self.head=dummy.next
+        return dummy.next
+
     
     def reversekth(self,left,right):
         if self.head is None:
@@ -150,28 +162,32 @@ class Linkedlist:
             else:
                 prev=prev.next
                 curr=curr.next
-        dummy.next=self.head
-        return self.head
+        # dummy.next=self.head
+        return dummy.next
                
             
                 
 ll=Linkedlist()
+# ll.insert_at_begining(6)
+# ll.insert_at_begining(6)
+# ll.insert_at_begining(6)
+# ll.insert_at_begining(6)
+
+
+ll.insert_at_begining(2)
+ll.insert_at_begining(1)
+ll.insert_at_begining(4)
+ll.insert_at_begining(3)
 ll.insert_at_begining(6)
-ll.insert_at_begining(6)
-ll.insert_at_begining(6)
-ll.insert_at_begining(6)
-ll.insert_at_begining(6)
-# ll.insert_at_begining(5)
-# ll.insert_at_begining(4)
-# ll.insert_at_begining(3)
-# ll.insert_at_begining(2)
-# ll.insert_at_begining(1)
+ll.insert_at_begining(5)
 ll.print_forward()
 # ll.reversekth(2,4)
 # ll.midial_last()
-ll.remove(6)
+# ll.remove(6)
+# ll.insertion_sort()
+
+ll.sortList()
 ll.print_forward()
-# print(ll.sortList())
 
         
         
