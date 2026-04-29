@@ -1,6 +1,5 @@
 def longest_vowel(nums,k):
     vowel="aeiou"
-    left=0
     leng=0
     for right in range(k):
         if nums[right] in vowel:

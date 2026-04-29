@@ -2,151 +2,211 @@ class Node:
     def __init__(self,data):
         self.data=data
         self.next=None
+        self.prev=None
     
-class Linkedlist:
+class Circulardoubly:
     def __init__(self):
         self.head=None
-        
+    
+    def insert_at_begining(self,data):
+        new_node=Node(data)
+        if self.head is None:
+            self.head=new_node
+            new_node.next=new_node
+            new_node.prev=new_node
+            return
+        new_node.next=self.head
+        self.head.prev=new_node
+        new_node.prev=self.head.prev
+        self.head.prev.next=new_node
+        return
+    
+    def insert_at_between(self,old_data,data):
+        new_node=Node(data)
+        if self.head is None:
+            return "list is empty"
+        temp=self.head
+        while temp.next!=self.head:
+            if temp.data==old_data:
+                next_node=temp.next
+                temp.next=new_node
+                new_node.prev=temp
+                new_node.next=next_node
+                next_node.prev=new_node
+                return
+            temp=temp.next
+        if temp.data==old_data:
+            next_node=temp.next
+            temp.next=new_node
+            new_node.prev=temp
+            new_node.next=next_node
+            next_node.prev=new_node
+            return 
+        return "data is Not found"
+    
     def insert_at_end(self,data):
         new_node=Node(data)
-        if self.head == None:
+        if self.head is None:
             self.head=new_node
-            return
+            new_node.next=new_node
+            new_node.prev=new_node
+            return 
         temp=self.head
-        while temp.next:
+        while temp.next!=self.head:
             temp=temp.next
         temp.next=new_node
-    def insert_at_beginning(self,data):
-        new_node=Node(data)
+        new_node.prev=temp
         new_node.next=self.head
-        self.head=new_node
-    
-    def reverse(self):
-        prev=None
-        curr=self.head
-        while curr:
-            next_node=curr.next
-            curr.next=prev
-            prev=curr
-            curr =next_node
-        self.head=prev
-    def count(self):
-        len=0
+        self.head.prev=new_node
+        return 
+    def print_forward(self):
+        if self.head is None:
+            return "list is empty"
         temp=self.head
-        while temp:
-            len+=1
+        while temp.next!=self.head:
+            print(temp.data,end=" ")
             temp=temp.next
-        return len
-    
-    def middle(self):
+        print(temp.data,end=" ")
+    def print_backward(self):
+        if self.head is None:
+            return "list is empty"
+        temp=self.head
+        while temp.next!=self.head:
+            temp=temp.next
+        curr=temp
+        while curr!=self.head:
+            print(curr.data,end=" ")
+            curr=curr.prev
+        print(curr.data,end=" ")
+        
+    def midium(self):
+        if self.head is None:
+            return "list is empty"
         slow=self.head
         fast=self.head
-        while fast and fast.next:
+        while fast.next != self.head and fast.next.next != self.head:
             slow=slow.next
             fast=fast.next.next
         return slow.data
-    def search(self,key):
-        temp=self.head
-        while temp:
-            if temp.data==key:
-                return True
-            temp=temp.next
-        return "not found key"
     
-    def delete_node(self,key):
+    def length(self):
+        if self.head is None:
+            return "list is empty"
+        lengt=1
+        curr=self.head
+        while curr.next!= self.head:
+            curr=curr.next
+            lengt+=1
+        return lengt
+    
+    def give_reference(self,data):
+        if self.head is None:
+            return "list is empty"
         temp=self.head
+        while temp.next!=self.head:
+            if temp.data==data:
+                return temp
+            temp=temp.next
+        if temp.data==data:
+            return temp
+        return None
+    
+    def delete_by_reference(self,node):
+        #case 1
+        if self.head is None or node is None:
+            return "list is none or Node data Not found"
         
-        if temp is not None and temp.data==key:
+        #case2
+        if self.head is node or node.next is node:
+            self.head=None
+            return "Only on node those are delete"
+        
+        #case 3
+        if self.head is node:
+            last=self.head.prev
+            last.next=self.head.next
+            self.head.next.prev=last
+            self.head=self.head.next
+            return "head node is delete"
+        
+        #case 4
+        prev=node.prev
+        nxt=node.next
+        prev.next=nxt
+        nxt.prev=prev
+        return "middle or last node is delete"
+    
+    def delete_node(self,data):
+        if self.head is None:
+            return "list is empty"
+        temp=self.head
+        if temp.data==data:
+            if temp.next is self.head:
+                self.head=None
+                return "only one node those are deleted"
+            last=self.head
+            while last.next!=self.head:
+                last=last.next
+            last.next=temp.next
+            temp.next.prev=last
             self.head=temp.next
             temp=None
-            return
+            return f"deleted {data} is head data"
         prev=None
-        while temp is not None and temp.data!=key:
+        temp=self.head
+        while temp.next !=self.head and temp.data!=data:
             prev=temp
             temp=temp.next
-        if temp is None:
-            print("value is not found")
-            return
+        if temp.data!=data:
+            return "data is Not found"
         prev.next=temp.next
+        temp.next.prev=prev
         temp=None
-            
-    def print_list(self):
-        temp=self.head
-        while temp:
-            print(temp.data,end=" ")
-            temp=temp.next
-        print("None")
+        return f"{data} is delete"
     
-    def swap_node(self):
+    def removenth(self,n):
+        temp=self.head
+        slow=self.head
+        for _ in range(n):
+            temp=temp.next
+        while temp.next != self.head:
+            slow=slow.next
+            temp=temp.next
+        slow.next=slow.next.next #3-5
+        temp.prev=slow
+        
+        return self.head
+    
+            
+            
+    def is_circular(self):
         if self.head is None:
             return "list is empty"
-        dummy=Node(0)
-        dummy.next=self.head
-        
-        prev=dummy
-        while prev.next and prev.next.next:
-            first=prev.next
-            second=first.next
-            
-            #swap
-            first.next=second.next
-            second.next=first
-            prev.next=second
-            
-            prev=first
-        self.head=dummy.next
-        return dummy.next   
-    def swap_kth_node(self,k):
-        if self.head is None:
-            return "list is empty"
-        dummy=Node(0)
-        dummy.next=self.head
-        
-        prev=dummy
+        temp=self.head
+        curr=self.head
         while True:
-            kth=prev
-            for _ in range(k):
-                kth=kth.next
-                if not kth:
-                    self.head=dummy.next
-                    return dummy.next
-            next_node=kth.next
-            prev_node=next_node
+            if temp.next==None:
+                return False
+            temp=temp.next.next
+            curr=curr.next
+            if curr==temp:
+                return True
             
-            curr=prev.next
-            while curr!= next_node:
-                temp=curr.next #2 #3 #4
-                curr.next=prev_node #1-4 #2-1 #3-2
-                prev_node=curr #1 #2 #3
-                curr=temp #2 #3 #4
-            temp=prev.next #1
-            prev.next=kth #3
-            prev=temp #1
-                
-                
-            
-ll=Linkedlist()
-ll.insert_at_beginning(10)
-ll.insert_at_end(12)
-ll.insert_at_beginning(101)
-ll.insert_at_end(121)
-ll.insert_at_beginning(102)
-ll.insert_at_end(122)
-ll.insert_at_beginning(103)
-ll.insert_at_end(123)
-ll.print_list()
-ll.reverse()
-ll.print_list()
-print(ll.search(123))
-print(ll.count())
-print(ll.middle())
-ll.delete_node(103)
-ll.print_list()
-ll.swap_node()
-print("swap")
-ll.print_list()
-print("swap_target")
-ll.swap_kth_node(3)
-ll.print_list()
-
-                 
+cll=Circulardoubly()
+cll.insert_at_begining(1)
+cll.insert_at_between(1,2)
+cll.insert_at_end(3)
+cll.insert_at_end(4)
+cll.insert_at_end(5)
+cll.print_forward()
+# print(cll.midium())
+# n=cll.give_reference(3)
+# print(cll.delete_by_reference(n))
+# print(cll.length())
+# print(cll.delete_node(2))
+# cll.print_forward()
+cll.removenth(2)
+print()
+# cll.print_backward()
+cll.print_forward()
+print(cll.is_circular())
