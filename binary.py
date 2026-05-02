@@ -181,11 +181,42 @@ class BSR:
         if not root:
             return 0
         return root.data+self.sum_left(root.right)+self.sum_left(root.left)
-        
- 
+    
+    def kth(self,k):
+        return self.kthlargest(self.root,k)
+    
+    def kthlargest(self,root,k):
+        if root is None:
+            return
+        stack=[]
+        curr=root
+        while stack or curr:
+            while curr:
+                stack.append(curr)
+                curr=curr.right
+            curr=stack.pop()
+            k-=1
+            if k==0:
+                return curr.data
+            curr=curr.left
+        return None
+    
+    def valid(self):
+        return self.isValidBST(self.root)
+    
+    def isValidBST(self,root):
+        def validate(node, low, high):
+            if not node:
+                return True
+            if not (low < node.data < high):
+                return False
+            return (validate(node.left, low, node.data) and validate(node.right, node.data, high))
+        return validate(root, float("-inf"), float("inf"))
+
 bsr=BSR()
 bsr.insert(10)
 bsr.insert(5)
+bsr.insert(6)
 bsr.insert(18)
 bsr.insert(20)
 bsr.insert(15)
@@ -193,19 +224,21 @@ bsr.insert(25)
 bsr.insert(4)
 bsr.insert(23)
 bsr.insert(30)
+# print(bsr.kth(3))
 # print(bsr.sum_node())
-bsr.delete(25)
-print(bsr.display())
+# bsr.delete(25)
+# print(bsr.display())
 # print(bsr.mini())
 # print(bsr.maxi())
 # print(bsr.mini())
 # bsr.maxi()
 # bsr.count()
 # print(bsr.search(23))
-bsr.inorder()
+# bsr.inorder()
 # print("preorder")
 # bsr.preorder()
 # print("postorder")
 # bsr.postorder()
 # print(bsr.height())
-# bsr.level_order()
+bsr.level_order()
+# print(bsr.valid())
