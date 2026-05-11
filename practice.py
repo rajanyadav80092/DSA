@@ -266,6 +266,19 @@ class Linkedlist:
         second=slow
         first.data,second.data=second.data,first.data
         return self.head
+    
+    def last_k(self,k):
+        if self.head is None:
+            return
+        slow=self.head
+        fast=self.head
+        for _ in range(k):
+            fast=fast.next
+        while fast and fast.next:
+            fast=fast.next
+            slow=slow.next
+        slow.next=slow.next.next
+        return self.head
                 
 ll=Linkedlist()
 # ll.insert_at_begining(6)
@@ -280,10 +293,10 @@ ll.insert_at_begining(6)
 ll.insert_at_begining(5)
 ll.insert_at_begining(28)
 ll.print_forward()
-ll.reversekth(2,7)
+# ll.reversekth(2,7)
 # ll.midial_last()
 # ll.remove(6)
-ll.insertion()
+# ll.insertion()
 # print(ll.insertion_sort())
 # ll.removelastnth_node(6)
 # ll.swap_node_start_end_kth(2)
@@ -291,6 +304,7 @@ ll.insertion()
 # ll.sortList()
 
 # ll.remove_val(2)
+ll.last_k(3)
 ll.print_forward()
 
         

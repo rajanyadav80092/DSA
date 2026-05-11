@@ -105,7 +105,7 @@ class Circulardoubly:
     
     def delete_reference(self,node):
         #case 1 none is empty
-        if self.head is None and node is None:
+        if self.head is None or node is None:
             print("node not found or node is none")
             return
         
