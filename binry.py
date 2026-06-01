@@ -173,7 +173,6 @@ class Doublylinkedlist:
         if dummy.next:
             dummy.next.prev=None
         self.head=dummy.next
-        return
         
         
             
