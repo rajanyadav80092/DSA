@@ -95,7 +95,7 @@ class Linkedlist:
         fast=self.head
         slow=self.head
         
-        for i in range(k+1):
+        for _ in range(k):
             fast=fast.next
         while fast and fast.next:
             slow=slow.next
@@ -104,10 +104,27 @@ class Linkedlist:
         return self.head
     
     #time complexity O(n) space complexity O(1)
+    
+    def merge_sort(self):
+        self.head=self.mergesort(self.head)
+    
+    def mergesort(self,head):
+        if head is None or head.next is None:
+            return head
+        slow=head
+        fast=head.next  #agar head.next nahi karenge to infinite loop ban jayega 
+        while fast and fast.next:
+            fast=fast.next.next
+            slow=slow.next
             
+        mid=slow.next
+        slow.next=None
+        left=self.mergesort(head)
+        right=self.mergesort(mid)
+        return self.merge(left,right)
+    
     def merge(self,l1,l2):
         dummy=Node(0)
-        dummy.next=self.head
         temp=dummy
         
         while l1 and l2:
@@ -125,7 +142,7 @@ class Linkedlist:
         self.head=dummy.next
         return self.head
     
-    #time complexity O(n) space O(1)
+    #time complexity O(n log n) space O(n)
                 
     def odd_even(self):
         if self.head is None:
@@ -153,10 +170,10 @@ class Linkedlist:
                 odd.append(temp.data)
             temp=temp.next
         n=len(even)+len(odd)
-        e,o=0,0
         even.sort()
         odd.sort(reverse=True)
         a=[]
+        e,o=0,0
         for i in range(n):
             if i%2==0:
                 a.append(even[e])
@@ -165,13 +182,14 @@ class Linkedlist:
                 a.append(odd[o])
                 o+=1
         dummy=Node(0)
-        curr=dummy
-        for i in range(len(a)):
-            curr.next=Node(a[i])
-            curr=curr.next
+        temp=dummy
+        m=len(a)
+        for i in range(m):
+            temp.next=Node(a[i])
+            temp=temp.next
         self.head=dummy.next
-        return dummy.next
-        
+        return self.head
+            
     
     #start
     def odd_than_even(self):
@@ -224,14 +242,14 @@ class Linkedlist:
         dummy.next=self.head
         temp=dummy
         for _ in range(left-1):
-            temp=temp.next
-        curr=temp.next
+            temp=temp.next #1
+        curr=temp.next #2
         for _ in range(right-left):
-            nxt=curr.next  #3
-            curr.next=nxt.next
-            nxt.next=temp.next
-            temp.next=nxt
-        return dummy.next
+            nxt=curr.next #3
+            curr.next=nxt.next #2-4
+            nxt.next=temp.next #3-2
+            temp.next=nxt #1-3
+        return self.head
             
         
                 
@@ -248,7 +266,7 @@ class Linkedlist:
     
     #time complexity O(n) space O(1)
 ll=Linkedlist()
-arr=[5,4,3,2,1]
+arr=[5,4,3,2,1,6,7]
 for i in arr:
     ll.insert_at_begining(i)
 # ll.insert_at_begining(3)
@@ -260,13 +278,14 @@ for i in arr:
 ll.print_list()
 # print(ll.is_cycle())
 # ll.reverse_list()
-# ll.remove_end(2)
+
 # ll.remove_nth_end(2)
 # print(ll.odd_even())
+ll.merge_sort()
 # ll.even_to_even()
 # ll.odd_than_even()
 # ll.swap_node()
-ll.reversenth(2,4)
+# ll.reversenth(2,4)
 ll.print_list()
 
             

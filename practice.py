@@ -279,7 +279,18 @@ class Linkedlist:
             slow=slow.next
         slow.next=slow.next.next
         return self.head
-                
+    def reversell(self):
+        if self.head is None:
+            return "linked list is empty"
+        prev=None
+        curr=self.head
+        while curr:
+            nxt=curr.next
+            curr.next=prev
+            prev=curr
+            curr=nxt
+        self.head=prev
+        return self.head
 ll=Linkedlist()
 # ll.insert_at_begining(6)
 # ll.insert_at_begining(6)
@@ -301,10 +312,12 @@ ll.print_forward()
 # ll.removelastnth_node(6)
 # ll.swap_node_start_end_kth(2)
 # ll.delete_middle()
-# ll.sortList()
+ll.sortList()
 
 # ll.remove_val(2)
-ll.last_k(3)
+# ll.last_k(3)
+# ll.print_forward()
+# ll.reversell()
 ll.print_forward()
 
         

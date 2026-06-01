@@ -64,6 +64,7 @@ class BSR:
         print(root.data)
     
     
+    
     def search(self,data):
         if self.root is None:
             return "bsr is empty"
@@ -151,26 +152,26 @@ class BSR:
                     print(" " * ((level + 1) * 4) + "R--- None")
     
     def level_order(self):
-        if not self.root:
-            return
-    
-        queue = deque([self.root]) # Step 1: Root ko queue mein dalo
-        result=[]
-        while queue:
-            level=[]
-            n=len(queue)
-            for _ in range(n):
-                node = queue.popleft() # Step 2: Queue se nikaalo (First person in line)
-                level.append(node.data)   # Step 3: Print karo
+        if self.root is None:
+            return self.root
         
-                # Step 4: Uske bacho ko queue ke peeche laga do
+        queue=deque([self.root])
+        result=[]
+        
+        while queue:
+            l=[]
+            n=len(queue)
+            
+            for _ in range(n):
+                node=queue.popleft()
+                l.append(node.data)
                 if node.left:
                     queue.append(node.left)
                 if node.right:
                     queue.append(node.right)
-            result.append(level)
+            result.append(l)
         return result
-    
+            
     def mindepth(self):
         if self.root is None:
             return 0
@@ -206,7 +207,6 @@ class BSR:
     def sum_left(self,root):
         if  root is None:
             return 0
-        b=root.data
         return root.data+self.sum_left(root.left)
     
     def kth(self,k):
@@ -269,6 +269,7 @@ class BSR:
         queue=deque([self.root])
         
         while queue:
+            
             for i in range(len(queue)):
                 node=queue.popleft()
                 if i==0:
@@ -281,26 +282,7 @@ class BSR:
     
     
           
-    #1
-    def company(self):
-        if self.root is None:
-            return []
-        queue=deque([self.root])
-        result=[]
-        while queue:
-            n=len(queue)
-            l=[]
-            for _ in range(n):
-                node=queue.popleft()
-                l.append(node.data)
-                if node.left:
-                    queue.append(node.left)
-                if node.right:
-                    queue.append(node.right)
-            result.append(l)
-        return result
-    #isme maine bfs lagya hai kyuki isme level wise answer chhahiye 
-    #time complexity O(n) and space complexity O(w)
+    
     
     #question 2 dfs lagega 
     def max_sum(self):
@@ -314,29 +296,7 @@ class BSR:
     
     
     
-    def search_and(self,data):
-        return self.search_and_ret(self.root,data)
-    
-    def search_and_ret(self,root,data):
-        if not root:
-            return
-        a=[]
-        node=root
-        while node:
-            if node.data==data:
-                a.append(data)
-                if node.left:
-                    node=node.left
-                    a.append(node.data)
-                if node.right:
-                    node=node.right
-                    a.append(node.data)
-                return a
-            elif node.data<data:
-                node=node.right
-            elif node.data>data:
-                node=node.left
-        return 
+     
    
     
 bsr=BSR()
@@ -356,7 +316,7 @@ print(bsr.leftSide())
 # print(bsr.company())
 # print(bsr.search_and(10))
 # print(bsr.kth(3))
-print(bsr.sum_node())
+# print(bsr.sum_node())
 # bsr.delete(25)
 # print(bsr.display())
 # print(bsr.mini())
@@ -370,6 +330,7 @@ print(bsr.sum_node())
 # bsr.preorder()
 # print("postorder")
 # bsr.postorder()
+print(bsr.search_and(30))
 # print(bsr.height())
 # print(bsr.mindepth())
 # print(bsr.level_order())
