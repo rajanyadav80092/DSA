@@ -141,6 +141,7 @@ class Doublylinkedlist:
             curr.prev=curr.next
             curr.next=temp
             curr=curr.prev
+        
         if temp:
             self.head=temp.prev
             
@@ -183,7 +184,7 @@ dll.insert_at_between(10,20)
 dll.insert_at_end(30)
 dll.insert_at_end(40)
 dll.insert_at_end(50)
-dll.reverse()
+# dll.reverse()
 # print(dll.delete_node(30))
 # n=dll.give_Reference(20)
 # print(dll.delete_reference(n))

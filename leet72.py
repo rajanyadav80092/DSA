@@ -1,4 +1,4 @@
-def min_window(s,t):
+def min_window(t,s):
     if not s or not t:
         return ""
     from collections import Counter
@@ -26,4 +26,4 @@ def min_window(s,t):
     return "" if ans[0] == float("inf") else s[ ans[1]: ans[2] +1]
 t="AA"
 s="A"
-print(min_window(t,s))    
+print(min_window(s,t))    

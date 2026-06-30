@@ -186,11 +186,11 @@ print(t.wordcountto("flow"))
 print(t.count("flo"))
 print(t.count("flo"))
 print(t.wordcountto("flow"))
-# print(t.longestcommon())
-# a="this cow carteen"
-# print(t.replace(a))
+print(t.longestcommon())
+a="this cow carteen"
+print(t.replace(a))
 
-# t.display()
-# print(t.search_new("..k"))
+t.display()
+print(t.search_new("..k"))
 
-# print(t.startwith1("car"))
+print(t.startwith1("car"))

@@ -12,5 +12,5 @@ def longest_vowel(nums,k):
             leng-=1
         max_len=max(max_len,leng)
     return max_len
-a="abciiidef"
+a="abcididef"
 print(longest_vowel(a,3))

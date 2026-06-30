@@ -1,180 +1,220 @@
+from collections import deque
 class Node:
     def __init__(self,data):
         self.data=data
-        self.prev=None
-        self.next=None
-
-class Circularsinglylist:
+        self.left=None
+        self.right=None
+    
+class BinaryTree:
     def __init__(self):
-        self.head=None
+        self.root=None
     
-    def insert_at_begining(self,data):
+    def insert(self,data):
         new_node=Node(data)
-        if self.head is None:
-            self.head=new_node
-            new_node.next=new_node
-            new_node.prev=new_node
-            return
-        nxt_node=self.head.prev  #last node
-        new_node.next=self.head
-        self.head.prev=new_node
-        new_node.prev=nxt_node
-        nxt_node.next=new_node
-        self.head=new_node
-        return
-    
-    def insert_at_between(self,old_data,new_data):
-        new_node=Node(new_data)
-        if self.head is None:
-            return "list is empty"
-        temp=self.head
-        while temp.next != self.head:
-            if temp.data==old_data:
-                nxt_node=temp.next
-                temp.next=new_node
-                new_node.prev=temp
-                new_node.next=nxt_node
-                nxt_node.prev=new_node
+        if self.root is None:
+            self.root=new_node
+            return 
+        temp=deque([self.root])
+        while temp:
+            q=temp.popleft()
+            if q.left is None:
+                q.left=new_node
+                return 
+            else:
+                temp.append(q.left)
+            if q.right is None:
+                q.right= new_node
                 return
-            temp=temp.next
-        if temp.data==old_data:
-            nxt_node=temp.next
-            temp.next=new_node
-            new_node.prev=temp
-            new_node.next=nxt_node
-            nxt_node.prev=new_node
-            return
-        return "data is not found"
+            else:
+                temp.append(q.right)
     
-    def insert_at_end(self,data):
-        new_node=Node(data)
-        if self.head is None:
-            self.head=new_node
-            new_node.next=new_node
-            new_node.prev=new_node
-            return
-        nxt_node=self.head.prev  #last
-        nxt_node.next=new_node
-        new_node.prev=nxt_node
-        new_node.next=self.head
-        self.head.prev=new_node
-        return
+    def inorder(self):
+        return self.inorder_l(self.root)
     
-    def print_forword(self):
-        if self.head is None:
-            return "list is empty"
-        temp=self.head
-        a=[]
-        while temp.next != self.head:
-            print(f"{temp.data}",end=" ")
-            temp=temp.next
-        print(f"{temp.data} ",end=" ")
+    def inorder_l(self,root):
+        if root is None:
+            return "tree is empty"
+        self.inorder_l(root.left)
+        print(root.data)
+        self.inorder_l(root.right)
+    
+    def search(self,data):
+        if self.root is None:
+            return "tree is empty"
+        temp=deque([self.root])
+        while temp:
+            n=len(temp)
+            for _ in range(n):
+                node=temp.popleft()
+                if node.data==data:
+                    return "data in binary tree"
+                if node.left:
+                    temp.append(node.left)
+                if node.right:
+                    temp.append(node.right)
+        return "data not in binary tree"
+    
+    def diameter(self):
+        return self.dia(self.root)
+    
+    def dia(self,root):
+        if root is None:
+            return "tree is empty"
         
-    def delete_data(self,data):
-        if self.head is None:
-            return "list is empty"
-        temp=self.head
-        if temp.data==data:
-            if temp.next is self.head:
-                self.head=None
-                return f"delete only one node {data}"
-            last=self.head
-            while last.next != self.head:
-                last=last.next
-            last.next=temp.next
-            temp.next.prev=last
-            self.head=temp.next
-            temp=None
-            return f"{data} is deleted"
+        def helper(node):
+            if not node:
+                return (0,0)
+            lh,ld=helper(node.left)
+            rh,rd=helper(node.right)
         
-        prev=None
-        temp=self.head
-        while temp.next != self.head and temp.data !=data:
-            prev=temp
-            temp=temp.next
+            height=1+max(lh,rh)
+        
+            dd=max(
+                1+lh+rh,
+                ld,
+                rd)
+            return height,dd
+        return helper(root)[0]
+    
+    def lca(self,p,q):
+        return self.lca_node(self.root,p,q)
+    
+    def lca_node(self,root,p,q):
+        if root is None:
+            return None
+        
+        if root.data == p or root.data == q:
+            return root.data
+        
+        left=self.lca_node(root.left,p,q)
+        right=self.lca_node(root.right,p,q)
+        
+        if left and right:
+            return root.data
+        
+        return left if left else right
+    
+    def levelOrder(self):
+        if self.root is None:
+            return "tree is empty"
+        temp=deque([self.root])
+        result=[]
+        while temp:
+            n=len(temp)
+            l=[]
+            for _ in range(n):
+                node=temp.popleft()
+                l.append(node.data)
+                if node.left:
+                    temp.append(node.left)
+                if node.right:
+                    temp.append(node.right)
+            result.append(l)
+        return result
+    
+    def maximum(self):
+        return self.maxi(self.root)
+    
+    def maxi(self,root):
+        
+        self.ans=0
+        def helper(node):
+            if not node:
+                return 0
+            left=max(0,helper(node.left))
+            right=max(0,helper(node.right))
             
-        if temp.data != data:
-            return "data is not found"
-        prev.next=temp.next
-        temp.next.prev=prev
-        temp=None
-        return f"{data} is deleted"
-    
-    def give_reference(self,data):
-        if self.head is None:
-            return "list is empty"
-        temp=self.head
-        while temp.next != self.head:
-            if temp.data==data:
-                return temp
-            temp=temp.next
-        
-        if temp.data==data:
-            return temp
-        return None
-    
-    def delete_reference(self,node):
-        if node is None or self.head is None:
-            return "data not found or empty list"
-        
-        #case 2
-        if self.head is node and node.next is node:
-            self.head=None
-            return "only one node those are delete"
-        
-        #case 3
-        if self.head is node:
-            prev=node.prev
-            nxt=node.next
-            prev.next=nxt
-            nxt.prev=prev
-            self.head=nxt
-            return "head node is deleted"
-        #case 4
-        prev=node.prev
-        nxt=node.next
-        prev.next=nxt
-        nxt.prev=prev
-        return "midial or last node delete"
-    
-    def is_circular(self):
-        if self.head is None:
-            return "list is empty"
-        slow=self.head
-        fast=self.head
-        while fast and fast.next:
-            slow=slow.next
-            fast=fast.next.next
+            curr=left+right+node.data
+            self.ans=max(curr,self.ans)
             
-            if slow is fast:
-                return True
-        return False
+            return max(left,right)+node.data
+        helper(root)
+        return self.ans
     
-    def midiam(self):
-        if self.head is None:
-            return "list is empty"
-        slow=self.head
-        fast=self.head
-        while fast.next != self.head and fast.next.next != self.head:
-            slow=slow.next
-            fast=fast.next.next
-        return slow.data
-    
+    def left_view(self):
+        if self.root is None:
+            return "tree is empty"
+        temp=deque([self.root])
+        result=[]
+        while temp:
+            n=len(temp)
             
+            for i in range(n):
+                node=temp.popleft()
+                if i==0:
+                    result.append(node.data)
+                if node.left:
+                    temp.append(node.left)
+                if node.right:
+                    temp.append(node.right)
+            
+        return result
     
+        
+    
+    def right_view(self):
+        if self.root is None:
+            return "tree is empty"
+        temp=deque([self.root])
+        result=[]
+        while temp:
+            n=len(temp)
+            for i in range(n):
+                node=temp.popleft()
+                if i==n-1:
+                    result.append(node.data)
+                if node.left:
+                    temp.append(node.left)
+                if node.right:
+                    temp.append(node.right)
 
-cll=Circularsinglylist()
-cll.insert_at_begining(10)
-cll.insert_at_between(10,11)
-cll.insert_at_end(12)
-print(cll.delete_data(11))
-# n=cll.give_reference(12)
-# print(cll.delete_reference(n))
-cll.print_forword()
-print(cll.is_circular())
-            
                 
+        return result
+            
+    def topView(self):
+        if self.root is None:
+            return "Tree is empty"
+        queue=deque([(self.root,0)])
+        hash={}
+        hd=0
+        while queue:
+            n=len(queue)
+            for _ in range(n):
+                node,hd=queue.popleft()
+                if hd not in hash:
+                    hash[hd]=node.data
+                if node.left:
+                    queue.append((node.left,hd-1))
+                if node.right:
+                    queue.append((node.right,hd+1))
+        arr=[]
+        for i in sorted(hash):
+            arr.append(hash[i])
+        return arr
+                
+                   
         
-
-
+        
+    
+    
+bt=BinaryTree()
+a=[10,21,5,2,13,15,34]
+for i in a:
+    bt.insert(i)
+bt.inorder()
+# print(bt.search(100))
+print("top view")
+print(bt.topView())
+print(bt.diameter())
+print("print lca")
+print(bt.lca(15,34))
+print("levelorder")
+print(bt.levelOrder())
+print("max_sum")
+print(bt.maximum())
+print("leftView")
+print(bt.left_view())
+print("rightView")
+print(bt.right_view())
+    
             

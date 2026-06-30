@@ -471,19 +471,25 @@ class BSR:
         
   
         
-            
+    def invert(self):
+        return self._invert(self.root)
     
-            
-            
-        
+    def _invert(self,root):
+        if root is None:
+            return None
+        root.left,root.right=root.right,root.left
+        self._invert(root.left)
+        self._invert(root.right)
+        return root
     
 
     
 bst=BSR()
-a=[5,2,6]
+a=[5,2,6,1,7,3]
 for i in a:
     bst.insert(i)
-
+print("invert")
+bst.invert()
 print("boundary")
 print(bst.bound())
 # print("zigzag")
@@ -503,8 +509,8 @@ print(bst.bound())
 # print("balanced")
 # print(bst.balance())
 # # print(bst.max_sum())
-print("maximum path sum")
-print(bst.maxiPath())
+# print("maximum path sum")
+# print(bst.maxiPath())
 # # print(bst.rightview())
 # print(bst.leftSide())
 # print(bst.company())
