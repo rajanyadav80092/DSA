@@ -1,7 +1,7 @@
 class Graph:
     def __init__(self,vno):
         self.cortex_count=vno
-        self.adj_matrix=[ [0]*vno for e in range(vno)]
+        self.adj_matrix=[ [0]*vno for _ in range(vno)]
     
     def add_edge(self,u,v,weight=1):
         if 0<=u<self.cortex_count and 0<=v<self.cortex_count:

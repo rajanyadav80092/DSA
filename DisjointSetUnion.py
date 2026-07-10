@@ -1,42 +1,43 @@
-class Disjoint:
+class DSU:
     def __init__(self,n):
         self.parent=[i for i in range(n+1)]
         self.size=[1]*(n+1)
     
-    def union(self,nums,nums2):
-        px=self.find(nums)
-        py=self.find(nums2)
+    def union(self,u,v):
+        px=self.find(u)
+        py=self.find(v)
         
         if px==py:
-            return
+            return 
         if self.size[px]<self.size[py]:
             px,py=py,px
-        self.parent[py]=self.find(self.parent[px])
+        self.parent[py]=px
         self.size[px]+=self.size[py]
     
-    def find(self,x):
-        if self.parent[x]==x:
-            return x
-        self.parent[x]=self.find(self.parent[x])
-        return self.parent[x]
+    def find(self,u):
+        if self.parent[u]==u:
+            return u
+        self.parent[u]=self.find(self.parent[u])
+        return self.parent[u]
     
-    def group(self):
-        count=0
-        for i in range(1,len(self.parent)):
+    def group(self,n):
+        g=0
+        for i in range(1,n+1):
             if self.find(i)==i:
-                count+=1
-        return count
-        
-    def printSize(self):
-        print(self.parent)
+                g+=1
+        return g
+    
+    def print_all(self,n):
+        for i in range(n+1):
+            dsu.find(i)
         print(self.size)
-d=Disjoint(5)
-d.union(1,2)
-d.union(3,4)
-d.union(4,5)
-d.union(1,5)
-d.printSize()
-print(d.group())
-print(d.find(4))
-d.printSize()
-print(d.group())
+            
+        return self.parent
+
+dsu=DSU(5)
+dsu.union(1,2)
+dsu.union(3,4)
+dsu.union(4,5)
+dsu.union(2,3)
+print(dsu.print_all(5))
+print(dsu.group(5))

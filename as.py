@@ -19,6 +19,7 @@ class Circulardoublylinkedlist:
         while temp.next != self.head:
             temp=temp.next
         temp.next=new_node
+        new_node.prev=temp
         new_node.next=self.head
         self.head.prev=new_node
         self.head=new_node
@@ -193,28 +194,77 @@ class Circulardoublylinkedlist:
         temp=None
         print(f"{data} is delete")
         return
+    
+    def reverse(self):
+        if self.head is None or self.head.next is self.head:
+            return self.head
+        
+        curr=self.head 
+        while True:
+            curr.next,curr.prev=curr.prev,curr.next
+            curr=curr.prev
+            if curr==self.head:
+                break
+        self.head=self.head.next
+        return self.head
+        # temp=self.head.next
+        # old_data=self.head
+        # prevNode=self.head
+        # while True:
+        #     curr=temp.next
+        #     temp.next=prevNode
+        #     prevNode.prev=temp
+        #     prevNode=temp
+        #     temp=curr
+        #     if temp==self.head:
+        #         break
+        # self.head=prevNode
+        # prevNode.prev=old_data
+        # old_data.next=self.head
+        # return self.head
             
+            
+    def pppp(self):
+        temp=self.head
+        while temp.next != self.head:
+            print(f"{temp.prev}:{temp.data}:{temp.next}")
+            temp=temp.next
+        print(f"{temp.prev}:{temp.data}:{temp.next}")      
+            
+            
+            
+            
+           
         
     
 cll=Circulardoublylinkedlist()
-cll.insert_at_begining(1)
-cll.insert_at_between(1,2)
-cll.insert_at_end(3)
+a=[5,4,3,2,1]
+for i in a:
+    
+    cll.insert_at_begining(i)
+# cll.insert_at_between(1,2)
+# cll.insert_at_end(3)
+# cll.print_forward()
+# print()
+# cll.print_backward()
+# print()
+# print(cll.length())
+# cll.insert_at_begining(1)
+# print(cll.midium())
+# n=cll.get_reference(2)
+# cll.delete_reference(n) 
+# cll.print_forward()  
+# print()
+# cll.delete_node(1)
+# print()
 cll.print_forward()
+# cll.pppp()
+cll.reverse()
 print()
-cll.print_backward()
+cll.pppp()
 print()
-print(cll.length())
-
-print(cll.midium())
+cll.print_forward()
 print(cll.is_circular())
-n=cll.get_reference(2)
-cll.delete_reference(n) 
-cll.print_forward()  
-print()
-cll.delete_node(1)
-print()
-cll.print_forward()
             
     
         

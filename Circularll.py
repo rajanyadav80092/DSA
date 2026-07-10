@@ -108,135 +108,131 @@ class CircularLinkedlist:
         return None
     
     def delete_reference(self,node):
-        if node is None:
-            return "list is empty or data incorrect"
+        if self.head is None or node is None:
+            return "list is empty or node is not found"
         
-        #case 2
-        if self.head is node and node.next is self.head:
+        if self.head is node and node.next is node:
             self.head=None
             return "only one node those are deleted"
         
-        #case 3
-        if node is self.head:
+        if self.head is node:
             temp=self.head
-            while temp.next != self.head:
+            while temp.next !=self.head:
                 temp=temp.next
-            temp.next=node.next
-            self.head=node.next
+            nxt=node.next
+            temp.next=nxt
+            self.head=nxt
             return "head node is deleted"
         
-        #case 4
-        prev=None
+        
         temp=self.head
-        while temp.next != self.head:
-            if temp==node:
-                nxt=temp.next
-                prev.next=nxt
-                return "midial node delete"
+        prev=None
+        while temp !=node:
             prev=temp
             temp=temp.next
-        if temp==node:
-            nxt=temp.next
-            prev.next=nxt
-            return "last node delete"
-        return "data not found"
-    
+        prev.next=temp.next
+        return "last node is deleted"
+        
+        
+        
     def delete_node(self,data):
         if self.head is None:
-            return "list is empty"
+            return  "list is emtpy"
         temp=self.head
         if temp.data==data:
             if temp.next is self.head:
                 self.head=None
-                return  f"{data} is deleted"
+                return "only one node those are deleted"
             last=self.head
             while last.next != self.head:
                 last=last.next
             last.next=temp.next
             self.head=temp.next
-            return f"{data} is deleted"
+            return "head node is delete"
         prev=None
         temp=self.head
-        while temp.next != self.head and temp.data != data:
+        while temp.next != self.head and temp.data !=data:
             prev=temp
             temp=temp.next
-        if temp.data != data:
-            return "data is not correct"
-        prev.next=temp.next
-        return  f"{data} is delete midial or last node delete"
+        if temp.data ==data:
+            prev.next=temp.next
+            return "middle or last node is deleted"
+        return "data is not found"
     
     def reverse(self):
-        if self.head is None:
-            return "list is empty"
+        if self.head is None or self.head.next == self.head:
+            return self.head
         prev=None
+        old_node=self.head
         temp=self.head
-        while temp.next != self.head:
-            nxt=temp.next
+        while temp.next !=self.head:
+            curr=temp.next
             temp.next=prev
             prev=temp
-            temp=nxt
-        if temp.next==self.head:
-            nxt=temp.next
-            temp.next=prev
-            prev=temp
-            temp=nxt
+            temp=curr
             
-        self.head=prev
-        
-        curr=self.head
-        while curr.next:
-            curr=curr.next
-        curr.next=self.head
-        return
-            
-    def reverse(self):
-        if self.head is None:
-            return "list is empty"
-        last=self.head
-        while last.next != self.head:
-            last=last.next
-        
-        prev=last
-        temp=self.head
-        while temp.next != self.head:
-            nxt=temp.next
-            temp.next=prev
-            prev=temp
-            temp=nxt
-        
-        nxt=temp.next
         temp.next=prev
         prev=temp
-        temp=nxt
         self.head=prev
-        return
+        old_node.next=self.head
+        return self.head
+        # temp=self.head
+        # arr=[]
+        # while temp.next != self.head:
+        #     arr.append(temp.data)
+        #     temp=temp.next
+        # arr.append(temp.data)
+        # dummy=Node(0)
+        # temp=dummy
+        # while arr:
+        #     a=arr.pop()
+        #     temp.next=Node(a)
+        #     temp=temp.next
+        # self.head=dummy.next
+        # temp.next=self.head
+        # return self.head
+        
             
-            
+    def pr(self):
+        temp=self.head
+        while temp.next != self.head:
+            print(f"{temp}:{temp.data}")
+            temp=temp.next
+        print("END") 
     
         
 cll=CircularLinkedlist()
-a=[11,100,101,110,10]
+a=[1,2,3,4,5]
 for i in a:
+    
     cll.insert_at_end(i)
-b=[111,222]
-for j in b:
-    cll.insert_at_beginning(j)
+# cll.insert_at_beginning(20)
+# n=cll.giveReference(20)
+# print(cll.delete_reference(n))
+
+# for i in a:
+#     cll.insert_at_end(i)
+# b=[111,222]
+# for j in b:
+#     cll.insert_at_beginning(j)
 cll.print_list()
 print()
-# print(cll.delete_node(111))
+print(cll.reverse())
+# print(cll.delete_node(222))
+cll.print_list()
 # n=cll.giveReference(11)
 # print(cll.delete_reference(n))
 # print(cll.print_list())
-cll.insert_at_between(100,1011)
-print()
-print("count")
-print(cll.count())
-cll.print_list()
-print(cll.midial())
+# cll.insert_at_between(100,1011)
 # print()
-# print(cll.print_list())
-print(cll.is_circular())
+# print("count")
+# print(cll.count())
+# cll.print_list()
+# print(cll.midial())
 # # print()
-cll.reverse()
-cll.print_list()
+# # print(cll.print_list())
 print(cll.is_circular())
+# # # print()
+# cll.reverse()
+# cll.print_list()
+# print(cll.is_circular())
