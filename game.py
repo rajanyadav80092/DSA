@@ -8,45 +8,54 @@ Tie=0
 
 
 while True:
-    choice=input("enter play or break : ")
-    if choice == "break" :
+    data=input("Enter your choice play or break")
+    if data=="break":
         break
-    
-    user=input("enter the option : ")
+    user=input("enter your choice: ")
     comp=random.choice(option)
-    if user!="paper" and user!="rock" and user!="scissor":
-        print("put right thing to option you put wrong : ",user)
-        user=input("enter the correct option : ")
-    if user == comp :
-        print(f"TIE : comp choice : {comp}")
-        Tie+=1
+    if user!="rock" and user != "scissor" and user != "paper":
+        print()
+        print("please enter correct data")
+        user=input("Enter your choice: ")
         
-    elif user == "rock" :
-        if comp=="paper" :
-            print(f"COMP WIN COMP CHOICE: {comp}")
-            comp_count+=1
-            
-        elif comp == "scissor":
-            print(f"{name} WIN COMP CHOICE : {comp}")
+    if user=="paper":
+        if comp=="rock":
+            print()
+            print(f"user win user choice : {user} comp choice : {comp}")
             user_win+=1
-        
-    elif user == "paper":
-        if comp == "rock" :
-            print(f"{name} WIN COMP CHOICE : {comp}")
-            user_win+=1
-          
-        elif comp == "scissor":
-            print(f"COMP WIN COMP CHOICE: {comp}")
+        elif comp=="scissor":
+            print()
+            print(f"comp win choice {comp} user choice {user}")
             comp_count+=1
-          
-        
-    elif user == "scissor":
-        if comp == "rock":
-            print(f"{name} WIN COMP CHOICE : {comp}")
-            user_win+=1
-        elif comp == "paper":
-            print(f"COMP WIN COMP CHOICE : {comp}")
+        else :
+            print("Tie match")
+            Tie+=1
+    elif user=="rock":
+        if comp=="paper":
+            print()
+            print(f"comp win choice {comp} user choice {user}")
             comp_count+=1
+        elif comp=="scissor":
+            print()
+            print(f"user win user choice : {user} comp choice : {comp}")
+            user_win+=1
+        else:
+            print("Tie match")
+            Tie+=1
+    else:
+        if comp=="paper":
+            print()
+            print(f"user win user choice : {user} comp choice : {user}")
+            user_win+=1
+        elif comp=="rock":
+            print()
+            print(f"comp win choice {comp} user choice {user}")
+            comp_count+=1
+        else:
+            print()
+            print("Tie match")
+            Tie+=1
+    
 
 print(f"THANK YOU : {name} ")
 print("COMPUTER WIN COUNT : ",comp_count)
